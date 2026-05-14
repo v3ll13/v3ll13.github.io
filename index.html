@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vellie Laguerre — Analyste d'affaires</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --coral:    #f4623a;
+  --coral-lt: #ff8a65;
+  --coral-bg: #fff4f1;
+  --teal:     #0f8a7a;
+  --teal-lt:  #19b5a2;
+  --teal-bg:  #edfaf8;
+  --gold:     #e8a020;
+  --gold-bg:  #fff8ec;
+  --navy:     #152440;
+  --navy-mid: #1e3560;
+  --gray-100: #f8f7f4;
+  --gray-200: #ede9e3;
+  --gray-400: #9e9a94;
+  --gray-600: #5c5750;
+  --white:    #ffffff;
+  --text:     #1a1714;
+  --radius:   12px;
+  --ease:     .22s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--gray-100);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(21,36,64,.97);
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 52px; height: 62px;
+}
+.nav-logo { font-family: 'Fraunces', serif; font-size: 17px; color: var(--white); }
+.nav-logo span { color: var(--coral-lt); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  color: rgba(255,255,255,.6); text-decoration: none;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  transition: color var(--ease);
+}
+.nav-links a:hover { color: var(--white); }
+.lang-toggle { display: flex; gap: 3px; background: rgba(255,255,255,.08); border-radius: 8px; padding: 3px; }
+.lang-toggle button {
+  background: none; border: none; color: rgba(255,255,255,.45);
+  font-size: 11px; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600; letter-spacing: .06em;
+  padding: 4px 10px; border-radius: 6px; cursor: pointer; transition: all var(--ease);
+}
+.lang-toggle button.active { background: var(--coral); color: var(--white); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex; flex-direction: column;
+  justify-content: center; padding: 100px 52px 80px;
+  position: relative; overflow: hidden;
+}
+.blob {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+.blob1 { top: -140px; right: -100px; width: 580px; height: 580px;
+  background: radial-gradient(circle, rgba(244,98,58,.18) 0%, transparent 65%); }
+.blob2 { bottom: -80px; left: 20%; width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(15,138,122,.14) 0%, transparent 65%); }
+.blob3 { top: 30%; left: -60px; width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(232,160,32,.1) 0%, transparent 65%); }
+
+.hero-inner {
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 60px; align-items: center; max-width: 1200px;
+}
+.hero-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--coral-lt); margin-bottom: 22px;
+  opacity: 0; animation: fadeUp .6s .15s forwards;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 4.5vw, 58px);
+  font-weight: 400; color: var(--white);
+  line-height: 1.18; max-width: 680px; margin-bottom: 26px;
+  opacity: 0; animation: fadeUp .6s .3s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--coral-lt); }
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,.6);
+  max-width: 520px; line-height: 1.75; margin-bottom: 44px;
+  opacity: 0; animation: fadeUp .6s .45s forwards;
+}
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeUp .6s .6s forwards; }
+.btn-primary {
+  background: var(--coral); color: var(--white); border: none;
+  border-radius: var(--radius); padding: 14px 30px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; text-decoration: none; display: inline-block;
+  transition: background var(--ease), transform var(--ease);
+}
+.btn-primary:hover { background: var(--coral-lt); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: rgba(255,255,255,.75);
+  border: 1.5px solid rgba(255,255,255,.2); border-radius: var(--radius);
+  padding: 14px 30px; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block;
+  transition: all var(--ease);
+}
+.btn-outline:hover { border-color: rgba(255,255,255,.55); color: var(--white); }
+
+.hero-photo-wrap { opacity: 0; animation: fadeUp .6s .5s forwards; width: 100%; }
+.hero-photo {
+  width: 100%; height: 520px;
+  border-radius: 200px 200px 20px 20px;
+  background: linear-gradient(160deg, rgba(244,98,58,.25), rgba(15,138,122,.2));
+  border: 2px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%;  transform: scale(1.20); }
+.hero-photo-placeholder {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: rgba(255,255,255,.4); font-size: 12px; text-align: center; padding: 20px; line-height: 1.5;
+}
+.hero-photo-placeholder span { font-size: 38px; }
+
+.hero-stats {
+  display: flex; gap: 14px; margin-top: 52px; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .6s .75s forwards;
+}
+.stat-card {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: 16px 22px;
+}
+.stat-num { font-family: 'Fraunces', serif; font-size: 26px; color: var(--white); display: block; line-height: 1; }
+.stat-label { font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; display: block; }
+
+/* SECTIONS */
+.section-wrap { padding: 96px 52px; }
+.section-wrap.alt { background: var(--white); }
+.inner { max-width: 1100px; margin: 0 auto; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin-bottom: 10px; }
+.section-title { font-family: 'Fraunces', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 400; color: var(--navy); line-height: 1.2; margin-bottom: 14px; }
+.section-intro { font-size: 16px; color: var(--gray-600); max-width: 540px; margin-bottom: 52px; }
+
+/* À PROPOS */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+.about-text p { font-size: 16px; color: var(--gray-600); margin-bottom: 18px; line-height: 1.8; }
+.about-quote {
+  border-left: 3px solid var(--coral); padding-left: 20px; margin: 28px 0;
+  font-family: 'Fraunces', serif; font-size: 19px; font-style: italic;
+  color: var(--navy-mid); line-height: 1.55;
+}
+.skill-item { margin-bottom: 18px; }
+.skill-top { display: flex; justify-content: space-between; margin-bottom: 7px; }
+.skill-name { font-size: 13px; font-weight: 500; color: var(--navy); }
+.skill-pct { font-size: 12px; color: var(--gray-400); }
+.skill-bar { height: 5px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+.skill-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1.1s .2s cubic-bezier(.4,0,.2,1); }
+.fill-coral { background: linear-gradient(90deg, var(--coral), var(--coral-lt)); }
+.fill-teal  { background: linear-gradient(90deg, var(--teal), var(--teal-lt)); }
+.fill-gold  { background: linear-gradient(90deg, var(--gold), #f5c842); }
+
+/* SERVICES */
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+.service-card {
+  background: var(--white); border-radius: 16px; padding: 36px 30px;
+  border: 1.5px solid var(--gray-200);
+  transition: transform var(--ease), box-shadow var(--ease);
+  position: relative; overflow: hidden;
+}
+.service-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  border-radius: 16px 16px 0 0; transform: scaleX(0); transform-origin: left; transition: transform var(--ease);
+}
+.service-card.c1::after { background: var(--coral); }
+.service-card.c2::after { background: var(--teal); }
+.service-card.c3::after { background: var(--gold); }
+.service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(21,36,64,.09); }
+.service-card:hover::after { transform: scaleX(1); }
+.service-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; }
+.icon-coral { background: var(--coral-bg); }
+.icon-teal  { background: var(--teal-bg); }
+.icon-gold  { background: var(--gold-bg); }
+.service-card h3 { font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+.service-card p  { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+
+/* PROJETS */
+.project-card {
+  background: var(--white); border-radius: 16px; padding: 38px; margin-bottom: 20px;
+  border: 1.5px solid var(--gray-200);
+  display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: start;
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+.project-card:hover { transform: translateX(5px); box-shadow: 0 8px 32px rgba(21,36,64,.07); }
+.project-tag {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+}
+.tag-coral { background: var(--coral-bg); color: var(--coral); }
+.tag-teal  { background: var(--teal-bg);  color: var(--teal); }
+.project-card h3 { font-size: 19px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+.project-card p  { font-size: 14px; color: var(--gray-600); line-height: 1.75; margin-bottom: 18px; }
+.project-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.meta-tag { font-size: 12px; padding: 3px 10px; border-radius: 4px; background: var(--gray-100); color: var(--gray-600); font-weight: 500; }
+.project-impact { text-align: right; min-width: 120px; }
+.impact-num { font-family: 'Fraunces', serif; font-size: 38px; color: var(--coral); display: block; line-height: 1; }
+.impact-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .06em; }
+.projects-placeholder {
+  background: var(--gray-100); border: 2px dashed var(--gray-200);
+  border-radius: 16px; padding: 56px; text-align: center;
+}
+.projects-placeholder p { color: var(--gray-400); font-size: 15px; }
+
+/* OUTILS */
+.tools-categories { display: flex; flex-direction: column; gap: 36px; }
+.tools-category-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px; }
+.tools-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.tool-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  border-radius: 50px; padding: 8px 18px;
+  font-size: 13px; font-weight: 500; color: var(--navy);
+  transition: border-color var(--ease), transform var(--ease);
+}
+.tool-pill:hover { border-color: var(--coral); transform: translateY(-2px); }
+.tool-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-coral { background: var(--coral); }
+.dot-teal  { background: var(--teal); }
+.dot-gold  { background: var(--gold); }
+
+/* CONTACT */
+.contact-wrap {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  position: relative; overflow: hidden;
+}
+.contact-blob {
+  position: absolute; top: -100px; right: -60px; width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(244,98,58,.15) 0%, transparent 65%); pointer-events: none;
+}
+.contact-wrap .section-label { color: var(--coral-lt); }
+.contact-wrap .section-title { color: var(--white); }
+.contact-intro { font-size: 17px; color: rgba(255,255,255,.55); max-width: 500px; margin-bottom: 44px; line-height: 1.75; }
+.contact-links { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-coral {
+  background: var(--coral); color: var(--white); border: none; border-radius: var(--radius);
+  padding: 14px 30px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600;
+  text-decoration: none; display: inline-block; transition: background var(--ease), transform var(--ease);
+}
+.btn-coral:hover { background: var(--coral-lt); transform: translateY(-2px); }
+.btn-ghost {
+  background: rgba(255,255,255,.08); color: rgba(255,255,255,.8);
+  border: 1.5px solid rgba(255,255,255,.18); border-radius: var(--radius); padding: 14px 30px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500;
+  text-decoration: none; display: inline-block; transition: all var(--ease);
+}
+.btn-ghost:hover { background: rgba(255,255,255,.15); color: var(--white); }
+
+/* FOOTER */
+footer {
+  background: #0d1929; padding: 24px 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+footer p { font-size: 12px; color: rgba(255,255,255,.28); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 820px) {
+  nav { padding: 0 20px; }
+  .nav-links a { display: none; }
+  .hero { padding: 100px 20px 72px; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .hero-photo-wrap {
+    display: flex;
+    justify-content: center;
+    order: -1;
+    margin-bottom: 32px;
+  }
+  .hero-photo {
+    width: 420px;
+    height: 540px;
+  }
+  .hero-stats { flex-wrap: wrap; gap: 12px; }
+  .section-wrap { padding: 64px 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .project-card { grid-template-columns: 1fr; }
+  .project-impact { text-align: left; }
+  footer { flex-direction: column; gap: 6px; text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Vellie <span>LAGUERRE</span></span>
+  <div class="nav-links">
+    <a href="#about"    data-fr="À propos"  data-en="About">À propos</a>
+    <a href="#services" data-fr="Services"  data-en="Services">Services</a>
+    <a href="#projects" data-fr="Projets"   data-en="Projects">Projets</a>
+    <a href="#tools"    data-fr="Outils"    data-en="Tools">Outils</a>
+    <a href="#contact"  data-fr="Contact"   data-en="Contact">Contact</a>
+    <div class="lang-toggle">
+      <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label" data-fr="Analyste d'affaires · Québec, Canada" data-en="Business Analyst · Quebec, Canada">Analyste d'affaires · Québec, Canada</p>
+      <h1 data-fr="J'aide les organisations à voir clairement leurs processus — et à les <em>améliorer concrètement</em>."
+          data-en="I help organizations see their processes clearly — and improve them in <em>meaningful ways</em>.">
+        J'aide les organisations à voir clairement leurs processus — et à les <em>améliorer concrètement</em>.
+      </h1>
+      <p class="hero-sub"
+         data-fr="Spécialisée en optimisation de processus et analyse des besoins, je traduis la complexité opérationnelle en solutions claires et actionnables."
+         data-en="Specialized in process optimization and requirements analysis, I turn operational complexity into clear, actionable solutions.">
+        Spécialisée en optimisation de processus et analyse des besoins, je traduis la complexité opérationnelle en solutions claires et actionnables.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary" data-fr="Voir mes projets →" data-en="View my projects →">Voir mes projets →</a>
+        <a href="#contact" class="btn-outline" data-fr="Me contacter" data-en="Get in touch">Me contacter</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-num">2+</span>
+          <span class="stat-label" data-fr="ans d'expérience" data-en="years experience">ans d'expérience</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">~1 900h</span>
+          <span class="stat-label" data-fr="heures BA documentées" data-en="documented BA hours">heures BA documentées</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">CCBA</span>
+          <span class="stat-label" data-fr="en cours · IIBA" data-en="in progress · IIBA">en cours · IIBA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO -->
+    <div class="hero-photo-wrap">
+      <div class="hero-photo">
+        <img src="photo.jpg" alt="Vellie Laguerre">
+        <div class="hero-photo-placeholder">
+         <!-- <span>👤</span>
+         Ta photo ici<br/>(voir instructions) -->  
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<div class="section-wrap alt" id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-label" data-fr="À propos" data-en="About me">À propos</p>
+        <h2 class="section-title" data-fr="Une BA qui pense processus et parle humain." data-en="A BA who thinks processes and speaks human.">Une BA qui pense processus et parle humain.</h2>
+        <p data-fr="J'évolue dans un contexte PME où chaque ressource compte et où la rigueur analytique fait toute la différence. Cette réalité m'a appris à livrer vite, à m'adapter, et à ne jamais perdre de vue l'impact réel sur les gens et les opérations."
+           data-en="I work in an SMB context where every resource matters and where analytical rigour makes all the difference. This taught me to deliver fast, adapt quickly, and never lose sight of the real impact on people and operations.">
+          J'évolue dans un contexte PME où chaque ressource compte et où la rigueur analytique fait toute la différence. Cette réalité m'a appris à livrer vite, à m'adapter, et à ne jamais perdre de vue l'impact réel sur les gens et les opérations.
+        </p>
+        <p data-fr="Mon quotidien : cartographier des processus clients, éliciter des besoins, structurer des exigences, et concevoir des formations qui font vraiment adopter les solutions — pas juste les comprendre."
+           data-en="My daily work: mapping client processes, eliciting needs, structuring requirements, and designing training that drives genuine adoption — not just understanding.">
+          Mon quotidien : cartographier des processus clients, éliciter des besoins, structurer des exigences, et concevoir des formations qui font vraiment adopter les solutions — pas juste les comprendre.
+        </p>
+        <blockquote class="about-quote"
+          data-fr="J'ai bâti mon expertise là où les équipes sont petites et les enjeux grands. Ça forge une rigueur qu'on ne trouve pas partout."
+          data-en="I built my expertise where teams are lean and stakes are high. It forges a rigour that's hard to find elsewhere.">
+          J'ai bâti mon expertise là où les équipes sont petites et les enjeux grands. Ça forge une rigueur qu'on ne trouve pas partout.
+        </blockquote>
+      </div>
+      <div class="reveal">
+        <p class="section-label" data-fr="Compétences clés" data-en="Key skills">Compétences clés</p>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name" data-fr="Élicitation & collaboration" data-en="Elicitation & collaboration">Élicitation & collaboration</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill fill-coral" data-width="95"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name" data-fr="Gestion des exigences" data-en="Requirements management">Gestion des exigences</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill fill-coral" data-width="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name" data-fr="Cartographie de processus" data-en="Process mapping">Cartographie de processus</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill fill-teal" data-width="88"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name" data-fr="Conception de formations" data-en="Training design">Conception de formations</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill fill-teal" data-width="85"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name" data-fr="Analyse stratégique" data-en="Strategic analysis">Analyse stratégique</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill fill-gold" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">SQL / Power BI / Excel</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill fill-gold" data-width="70"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section-wrap" id="services">
+  <div class="inner">
+    <div class="reveal">
+      <p class="section-label" data-fr="Ce que je fais" data-en="What I do">Ce que je fais</p>
+      <h2 class="section-title" data-fr="Trois expertises, un fil conducteur." data-en="Three areas of expertise, one thread.">Trois expertises, un fil conducteur.</h2>
+      <p class="section-intro" data-fr="Clarifier, structurer, et faire adopter — c'est ce que j'apporte à chaque mandat." data-en="Clarify, structure, and drive adoption — that's what I bring to every engagement.">Clarifier, structurer, et faire adopter — c'est ce que j'apporte à chaque mandat.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card c1 reveal">
+        <div class="service-icon icon-coral">🗺️</div>
+        <h3 data-fr="Cartographie de processus" data-en="Process mapping">Cartographie de processus</h3>
+        <p data-fr="Modéliser et optimiser les flux opérationnels pour révéler les inefficacités cachées et clarifier les responsabilités à chaque étape." data-en="Model and optimize operational flows to surface hidden inefficiencies and clarify responsibilities at every step.">Modéliser et optimiser les flux opérationnels pour révéler les inefficacités cachées et clarifier les responsabilités à chaque étape.</p>
+      </div>
+      <div class="service-card c2 reveal">
+        <div class="service-icon icon-teal">📋</div>
+        <h3 data-fr="Analyse des besoins" data-en="Requirements analysis">Analyse des besoins</h3>
+        <p data-fr="Éliciter, structurer et prioriser les exigences pour aligner les parties prenantes sur ce qui compte vraiment — avant que ça coûte cher." data-en="Elicit, structure, and prioritize requirements to align stakeholders around what truly matters — before it gets costly.">Éliciter, structurer et prioriser les exigences pour aligner les parties prenantes sur ce qui compte vraiment — avant que ça coûte cher.</p>
+      </div>
+      <div class="service-card c3 reveal">
+        <div class="service-icon icon-gold">🎯</div>
+        <h3 data-fr="Transfert de connaissance" data-en="Knowledge transfer">Transfert de connaissance</h3>
+        <p data-fr="Concevoir des formations et de la documentation qui font vraiment adopter les solutions — pas juste les comprendre, mais les utiliser au quotidien." data-en="Design training and documentation that drives genuine adoption — not just understanding, but daily use.">Concevoir des formations et de la documentation qui font vraiment adopter les solutions — pas juste les comprendre, mais les utiliser au quotidien.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJETS -->
+<div class="section-wrap alt" id="projects">
+  <div class="inner">
+    <div class="reveal">
+      <p class="section-label" data-fr="Projets" data-en="Projects">Projets</p>
+      <h2 class="section-title" data-fr="Livrables réels, impacts concrets." data-en="Real deliverables, concrete impact.">Livrables réels, impacts concrets.</h2>
+      <p class="section-intro" data-fr="Chaque projet est anonymisé pour respecter la confidentialité des clients." data-en="Each project is anonymized to protect client confidentiality.">Chaque projet est anonymisé pour respecter la confidentialité des clients.</p>
+    </div>
+    <div class="project-card reveal">
+      <div>
+        <span class="project-tag tag-coral" data-fr="Cartographie de processus" data-en="Process mapping">Cartographie de processus</span>
+        <h3 data-fr="Optimisation des flux opérationnels — secteur distribution" data-en="Operational flow optimization — distribution sector">Optimisation des flux opérationnels — secteur distribution</h3>
+        <p data-fr="Analyse et modélisation complète des processus internes d'une entreprise de distribution régionale (~150 employés). Identification des goulets d'étranglement et recommandations d'amélioration priorisées." data-en="Full analysis and modeling of internal processes for a regional distribution company (~150 employees). Identification of bottlenecks and prioritized improvement recommendations.">Analyse et modélisation complète des processus internes d'une entreprise de distribution régionale (~150 employés). Identification des goulets d'étranglement et recommandations d'amélioration priorisées.</p>
+        <div class="project-meta">
+          <span class="meta-tag">BPMN</span>
+          <span class="meta-tag">Élicitation</span>
+          <span class="meta-tag">Ateliers</span>
+        </div>
+      </div>
+      <div class="project-impact">
+        <span class="impact-num">—</span>
+        <span class="impact-label" data-fr="à compléter" data-en="to complete">à compléter</span>
+      </div>
+    </div>
+    <div class="projects-placeholder reveal">
+      <p data-fr="✦ D'autres projets seront ajoutés prochainement" data-en="✦ More projects coming soon">✦ D'autres projets seront ajoutés prochainement</p>
+    </div>
+  </div>
+</div>
+
+<!-- OUTILS -->
+<div class="section-wrap" id="tools">
+  <div class="inner">
+    <div class="reveal">
+      <p class="section-label" data-fr="Outils et méthodes" data-en="Tools and methods">Outils et méthodes</p>
+      <h2 class="section-title" data-fr="Une stack solide et en croissance." data-en="A solid and growing stack.">Une stack solide et en croissance.</h2>
+    </div>
+    <div class="tools-categories reveal">
+      <div>
+        <p class="tools-category-label" style="color:var(--coral)" data-fr="⬤ Technique" data-en="⬤ Technical">⬤ Technique</p>
+        <div class="tools-row">
+          <div class="tool-pill"><div class="tool-dot dot-coral"></div>SQL</div>
+          <div class="tool-pill"><div class="tool-dot dot-coral"></div>Power BI</div>
+          <div class="tool-pill"><div class="tool-dot dot-coral"></div><span data-fr="Excel avancé" data-en="Advanced Excel">Excel avancé</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="tools-category-label" style="color:var(--teal)" data-fr="⬤ Méthodologie" data-en="⬤ Methodology">⬤ Méthodologie</p>
+        <div class="tools-row">
+          <!-- <div class="tool-pill"><div class="tool-dot dot-teal"></div>BABOK v3</div> -->
+         <!-- <div class="tool-pill"><div class="tool-dot dot-teal"></div>BPMN</div>  -->
+          <div class="tool-pill"><div class="tool-dot dot-teal"></div><span data-fr="Élicitation" data-en="Elicitation">Élicitation</span></div>
+          <div class="tool-pill"><div class="tool-dot dot-teal"></div><span data-fr="Gestion des exigences" data-en="Requirements management">Gestion des exigences</span></div>
+          <div class="tool-pill"><div class="tool-dot dot-teal"></div><span data-fr="Analyse de processus" data-en="Process analysis">Analyse de processus</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="tools-category-label" style="color:var(--gold)" data-fr="⬤ Certifications" data-en="⬤ Certifications">⬤ Certifications</p>
+        <div class="tools-row">
+          <div class="tool-pill"><div class="tool-dot dot-gold"></div><span data-fr="CCBA — en cours (IIBA)" data-en="CCBA — in progress (IIBA)">CCBA — en cours (IIBA)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section-wrap contact-wrap" id="contact">
+  <div class="contact-blob"></div>
+  <div class="inner">
+    <p class="section-label" data-fr="Contact" data-en="Contact">Contact</p>
+    <h2 class="section-title reveal" data-fr="Travaillons ensemble." data-en="Let's work together.">Travaillons ensemble.</h2>
+    <p class="contact-intro reveal"
+       data-fr="Vous avez un projet d'optimisation, une initiative en cours, ou vous cherchez à renforcer votre équipe BA ? Je serais ravie d'en discuter."
+       data-en="You have an optimization project, an ongoing initiative, or you're looking to strengthen your BA team? I'd love to connect.">
+      Vous avez un projet d'optimisation, une initiative en cours, ou vous cherchez à renforcer votre équipe BA ? Je serais ravie d'en discuter.
+    </p>
+    <div class="contact-links reveal">
+      <a href="https://www.linkedin.com/in/vellie-laguerre-0649a3119/" target="_blank" class="btn-coral">LinkedIn →</a>
+      <a href="mailto:laguerre.vellie@gmail.com" class="btn-ghost">Envoyez moi un courriel</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Vellie Laguerre</p>
+  <p data-fr="Québec, Canada" data-en="Quebec, Canada">Québec, Canada</p>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val) el.innerHTML = val;
+  });
+  document.documentElement.lang = lang;
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.skill-fill').forEach(f => {
+        f.style.width = f.getAttribute('data-width') + '%';
+      });
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+window.addEventListener('scroll', () => {
+  const links = document.querySelectorAll('.nav-links a[href^="#"]');
+  let current = '';
+  document.querySelectorAll('[id]').forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  links.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,.6)';
+  });
+});
+</script>
+</body>
+</html>
